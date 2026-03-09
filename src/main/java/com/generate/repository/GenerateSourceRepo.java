@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface GenerateSourceRepo {
     List<GenerateSource> findByGeneratorId(long id);
+
+    GenerateSource findById(long id);
 }

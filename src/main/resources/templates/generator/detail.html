@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+
+<div layout:fragment="main">
+    <form th:action="@{/detail}" method="post">
+        <input type="hidden" name="id" th:vaule="${param.id}">
+        <input type="date" name="date" th:value="${today}" th:min="${addedDate}" th:max="${today}">
+        <button>선택</button>
+    </form>
+
+</div>
+</html>

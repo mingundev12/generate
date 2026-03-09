@@ -1,10 +1,7 @@
 package com.generate.service;
 
 import com.generate.dto.GeneratorDto;
-import com.generate.dto.SourceDto;
-import com.generate.entity.GenerateSource;
 import com.generate.entity.Generator;
-import com.generate.repository.GenerateSourceRepo;
 import com.generate.repository.GeneratorRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,18 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GeneratorService {
     private final GeneratorRepo generatorRepo;
-    private final GenerateSourceRepo generateSourceRepo;
-
-    public List<SourceDto> getSourceList(long id) {
-        List<GenerateSource> sources = generateSourceRepo.findByGeneratorId(id);
-        List<SourceDto> sourceList = new ArrayList<>();
-
-        for(GenerateSource source : sources) {
-            sourceList.add(new SourceDto(source));
-        }
-
-        return sourceList;
-    }
 
     public List<GeneratorDto> getGeneratorList() {
         List<Generator> generators = generatorRepo.findAll();

@@ -4,15 +4,15 @@ import com.generate.entity.GenerateSource;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
 public class SourceDto {
     private long sourceId;
     private String sourceSn;
-    private Date installedAt;
+    private LocalDate installedAt;
     private double maxCapacity;
     private LocalDateTime createdAt;
 

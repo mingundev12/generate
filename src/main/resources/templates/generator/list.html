@@ -19,7 +19,7 @@
                 <td th:text="*{stat.count}"></td>
                 <td>
                     <a th:text="*{row.sourceSn}"
-                       th:href="@{/generator/source(id=${row.sourceId})}">
+                       th:href="@{/detail(id=${row.sourceId})}">
                     </a>
                 </td>
                 <td th:text="*{row.installedAt}"></td>

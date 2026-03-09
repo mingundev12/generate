@@ -1,11 +1,14 @@
 package com.generate.service;
 
+import com.generate.dto.DailyLogDto;
+import com.generate.entity.GenerateSource;
 import com.generate.entity.GenerationLog;
 import com.generate.repository.GenerationLogRepo;
 import com.generate.util.SolarDataUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GenerationLogService {
     private final GenerationLogRepo generationLogRepo;
+    private final GenerateSourceService generateSourceService;
 
     public void generateEnergy
             (long sourceId, double maxCapacity,
@@ -36,5 +40,11 @@ public class GenerationLogService {
         if (!generateList.isEmpty()) {
             generationLogRepo.save(generateList);
         }
+    }
+
+    public List<DailyLogDto> getLogList(long id, LocalDate date) {
+        GenerateSource generateSource = generateSourceService.getGenerateSource(id);
+        
+        return null;
     }
 }
