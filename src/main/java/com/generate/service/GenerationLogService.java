@@ -44,7 +44,7 @@ public class GenerationLogService {
 
     public List<DailyLogDto> getLogList(long id, LocalDate date) {
         GenerateSource generateSource = generateSourceService.getGenerateSource(id);
-        
+
         return null;
     }
 }
