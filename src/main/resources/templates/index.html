@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+
+<div layout:fragment="main">
+    <h1>발전소 목록</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>이름</th>
+                <th>등록일</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="row,stat:${list}">
+                <td th:text="*{stat.count}"></td>
+                <td>
+                    <a th:text="*{row.generatorName}" th:href="@{/generator(id=${row.generatorId})}"></a>
+                </td>
+                <td th:text="*{row.createdAt}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+</html>
