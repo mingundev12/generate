@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class SourceDto {
     private long sourceId;
     private String sourceSn;
+    private long generatorId;
     private LocalDate installedAt;
     private double maxCapacity;
     private LocalDateTime createdAt;
@@ -19,6 +20,7 @@ public class SourceDto {
     public SourceDto(GenerateSource source) {
         this.sourceId = source.getSourceId();
         this.sourceSn = source.getSourceSn();
+        this.generatorId = source.getGeneratorId();
         this.installedAt = source.getInstalledAt();
         this.maxCapacity = source.getMaxCapacity();
         this.createdAt = source.getCreatedAt();

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 
@@ -21,25 +22,36 @@ public class GeneratorController {
 
     @GetMapping("/generator")
     public String generatorList(@RequestParam("id") long id, Model model) {
-        model.addAttribute("generatorName", generatorService.getGeneratorName(id));
+        model.addAttribute("generatorName", generatorService.getGenerator(id).getGeneratorName());
         model.addAttribute("list", generateSourceService.getSourceList(id));
 
         return "generator/list";
     }
 
     @GetMapping("/detail")
-    public String showCalender(@RequestParam("id") long id, Model model) {
+    public String showCalender(@RequestParam("id") long id,
+                               @RequestParam(value="selectedDate", required = false) LocalDate selectedDate,
+                               Model model) {
         model.addAttribute("addedDate", generateSourceService.getAddedDate(id));
         model.addAttribute("today", LocalDate.now());
+        if(selectedDate == null) {
+            selectedDate = LocalDate.now();
+        }
+        model.addAttribute("selectedDate", selectedDate);
+        model.addAttribute("dailyLog",
+                generationLogService.getLogList(id, selectedDate));
+        model.addAttribute("generatorId",
+                generateSourceService.getGenerateSource(id).getGeneratorId());
 
         return "generator/detail";
     }
 
     @PostMapping("/detail")
     public String showDetail(@RequestParam("id") long id, @RequestParam("date") LocalDate date,
-                             Model model) {
-        model.addAttribute("dailyLog", generationLogService.getLogList(id, date));
+                             RedirectAttributes redirectAttributes) {
+        redirectAttributes.addAttribute("selectedDate", date);
+        redirectAttributes.addAttribute("id", id);
 
-        return "redirect:/detail?id=" + id;
+        return "redirect:/detail";
     }
 }

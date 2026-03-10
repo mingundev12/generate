@@ -5,10 +5,30 @@
 
 <div layout:fragment="main">
     <form th:action="@{/detail}" method="post">
-        <input type="hidden" name="id" th:vaule="${param.id}">
-        <input type="date" name="date" th:value="${today}" th:min="${addedDate}" th:max="${today}">
+        <input type="hidden" name="id" th:value="${param.id}">
+        <input type="date" name="date" th:value="${selectedDate}" th:min="${addedDate}" th:max="${today}">
         <button>선택</button>
     </form>
-
+    <table th:if="${dailyLog != null and !dailyLog.isEmpty()}">
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>발전량</th>
+            <th>효율</th>
+            <th>상태</th>
+            <th>시간</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row,stat:${dailyLog}">
+            <td th:text="*{stat.count}"></td>
+            <td th:text="*{row.generationKwh} + 'KWh'"></td>
+            <td th:text="*{row.efficiency}"></td>
+            <td th:text="*{row.statusCode}"></td>
+            <td th:text="*{row.createdAt}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <a  th:href="@{/generator(id=${generatorId})}">패널 목록</a>
 </div>
 </html>

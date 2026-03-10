@@ -25,8 +25,7 @@ public class GeneratorService {
         return generatorDtos;
     }
 
-    public String getGeneratorName(long id) {
-        Generator generator = generatorRepo.findById(id);
-        return generator.getGeneratorName();
+    public Generator getGenerator(long id) {
+        return generatorRepo.findById(id);
     }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.generate.repository.GenerationLogRepo">
+    <select id="findLastLog" resultType="com.generate.entity.GenerationLog">
+        select * from energy_generation_logs where source_id = #{sourceId} order by created_at desc limit 1
+    </select>
+
+    <select id="findDailyLogs" resultType="com.generate.entity.GenerationLog">
+        select * from energy_generation_logs where source_id = #{sourceId}
+        and <![CDATA[created_at >= #{start} and created_at < #{end}]]>
+        order by created_at asc
+    </select>
+
+    <insert id="saveAll" parameterType="com.generate.entity.GenerationLog">
+        insert into energy_generation_logs (source_id, generation_kwh, efficiency, created_at) values
+        <foreach collection="list" item="log" separator=",">
+            (#{log.sourceId}, #{log.generationKwh}, #{log.efficiency}, #{log.createdAt})
+        </foreach>
+    </insert>
+</mapper>

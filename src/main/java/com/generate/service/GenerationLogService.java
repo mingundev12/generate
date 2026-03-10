@@ -25,26 +25,60 @@ public class GenerationLogService {
         List<GenerationLog> generateList = new ArrayList<>();
 
         LocalDateTime current = start;
+
+        if (end.isAfter(LocalDateTime.now())) {
+            end = LocalDateTime.now()
+                    .withMinute(0).withSecond(0).withNano(0).plusHours(1);
+        }
         while (current.isBefore(end)) {
             GenerationLog generationLog = new GenerationLog();
 
             generationLog.setSourceId(sourceId);
             generationLog.setEfficiency(SolarDataUtil.getEfficiency());
+            generationLog.setCreatedAt(current);
             generationLog.setGenerationKwh
                     (SolarDataUtil.generatePower(
                             current, maxCapacity, generationLog.getEfficiency()));
-            generateList.add(generationLog);
+            if(generationLog.getGenerationKwh() == 0.0) {
+                generationLog.setEfficiency(1.0);
+            }
+            if(generationLog.getGenerationKwh() >= 0){
+                generateList.add(generationLog);
+            }
             current = current.plusHours(1);
         }
 
         if (!generateList.isEmpty()) {
-            generationLogRepo.save(generateList);
+            generationLogRepo.saveAll(generateList);
         }
+
     }
 
     public List<DailyLogDto> getLogList(long id, LocalDate date) {
-        GenerateSource generateSource = generateSourceService.getGenerateSource(id);
+        List<GenerationLog> generationLogs =
+                generationLogRepo.findDailyLogs
+                        (id, date.atStartOfDay(), date.atStartOfDay().plusDays(1));
+        List<DailyLogDto> dailyLogDtoList = new ArrayList<>();
 
-        return null;
+        if(generationLogs.isEmpty()) {
+            GenerateSource source = generateSourceService.getGenerateSource(id);
+            GenerationLog generationLog = generationLogRepo.findLastLog(id);
+
+            LocalDateTime start = generationLog == null ?
+                    source.getCreatedAt().withMinute(0).withSecond(0).withNano(0) :
+                    generationLog.getCreatedAt().withMinute(0).withSecond(0).withNano(0)
+                            .plusHours(1);
+            LocalDateTime end = LocalDateTime.now();
+
+            generateEnergy(source.getSourceId(), source.getMaxCapacity(), start, end);
+            generationLogs =
+                    generationLogRepo.findDailyLogs
+                            (id, date.atStartOfDay(), date.atStartOfDay().plusDays(1));
+        }
+        for(GenerationLog generationLog : generationLogs) {
+            dailyLogDtoList.add(new DailyLogDto(generationLog));
+        }
+
+        return dailyLogDtoList;
     }
 }

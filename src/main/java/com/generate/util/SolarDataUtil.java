@@ -26,6 +26,7 @@ public class SolarDataUtil {
         }
 
         double basePower = Math.sin(Math.PI * (hour - sunriseHr) / (sunsetHr - sunriseHr));
+        basePower = Math.max(0, basePower);
 
         return basePower * maxCapacity * efficiency;
     }
