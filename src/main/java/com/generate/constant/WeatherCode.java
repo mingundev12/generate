@@ -18,7 +18,7 @@ public enum WeatherCode {
 
     private final int wmo;
     private final String description;
-    private final double efficiencyFactor;
+    private final double efficiencyFactor; // 발전량 가중치
 
     public static WeatherCode fromCode(String code) {
         if (code == null || code.isBlank()) {

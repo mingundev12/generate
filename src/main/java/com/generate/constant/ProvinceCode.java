@@ -12,7 +12,7 @@ public enum ProvinceCode {
 
     private final String provinceCode; // 광역 코드
     private final String description; // 광역단체명
-    private final String shortDesc;
+    private final String shortDesc; // 광역단체명 약칭
 
     public static ProvinceCode fromCode(String stateCode) {
         return Arrays.stream(ProvinceCode.values())

@@ -11,6 +11,7 @@ import java.util.Arrays;
 public enum DistrictCode {
     DAEJEON_JUNG("30140", ProvinceCode.DAEJEON, "중구",
             new BigDecimal("36.325781"), new BigDecimal("127.42133"));
+    // TODO: 다른 행정구역도 추가
 
     private final String districtCode; // 지역 코드(기초단체 행정동코드 5자리)
     private final ProvinceCode state; // 광역 코드
