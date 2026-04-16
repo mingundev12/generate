@@ -5,7 +5,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class DataCollectorsUtil {
+public class StreamProcessUtil {
 
     /// 아키텍쳐 구조를 변경하지 않고 간편하게 이중 맵의 키를 교환하는 메서드
     public static <K1, K2, V> Map<K2, Map<K1, V>> transpose(Map<K1, Map<K2, V>> originalMap) {
